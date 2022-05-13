@@ -1,5 +1,6 @@
 import { API_BASE_URL, POLL_LIST_SIZE, ACCESS_TOKEN } from '../constants';
 
+
 const request = (options) => {
     const headers = new Headers({
         'Content-Type': 'application/json',
@@ -41,6 +42,18 @@ export function getAllUsers() {
     });
 
 }
+
+// export const getUserList = () => {
+//     return (dispatch) => {
+//         axios.get("http://localhost:8080/api/users/all")
+//             .then((response) =>{
+//                 dispatch({type: 'GET_USER_LIST',payload: response.data})
+//             }).catch((error) => {
+//             dispatch({type: 'GET_USER_LIST',payload: {}})
+//         })
+//     }
+// };
+
 
 export function createPoll(pollData) {
     return request({
