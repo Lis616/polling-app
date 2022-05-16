@@ -36,16 +36,16 @@ class LoginForm extends Component {
                     .then(response => {
                         localStorage.setItem(ACCESS_TOKEN, response.accessToken);
                         this.props.onLogin();
-                    }).catch(error => {
-                    if(error.status === 401) {
+                    }).catch(err => {
+                    if(err.status === 401) {
                         notification.error({
-                            message: 'Polling App',
-                            description: 'Your Username or Password is incorrect. Please try again!'
+                            message: 'Authentication Message',
+                            description: 'Incorrect username or password'
                         });
                     } else {
                         notification.error({
-                            message: 'Polling App',
-                            description: error.message || 'Sorry! Something went wrong. Please try again!'
+                            message: 'Authentication Message',
+                            description: 'Incorrect username or password'
                         });
                     }
                 });

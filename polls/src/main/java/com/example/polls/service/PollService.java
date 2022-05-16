@@ -18,12 +18,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +45,7 @@ public class PollService {
     public PagedResponse<PollResponse> getAllPolls(UserPrincipal currentUser, int page, int size) {
         validatePageNumberAndSize(page, size);
 
-        // Retrieve Polls
+
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
         Page<Poll> polls = pollRepository.findAll(pageable);
 
@@ -56,7 +54,7 @@ public class PollService {
                     polls.getSize(), polls.getTotalElements(), polls.getTotalPages(), polls.isLast());
         }
 
-        // Map Polls to PollResponses containing vote counts and poll creator details
+
         List<Long> pollIds = polls.map(Poll::getId).getContent();
         Map<Long, Long> choiceVoteCountMap = getChoiceVoteCountMap(pollIds);
         Map<Long, Long> pollUserVoteMap = getPollUserVoteMap(currentUser, pollIds);
@@ -79,7 +77,7 @@ public class PollService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
-        // Retrieve all polls created by the given username
+
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
         Page<Poll> polls = pollRepository.findByCreatedBy(user.getId(), pageable);
 
@@ -88,7 +86,7 @@ public class PollService {
                     polls.getSize(), polls.getTotalElements(), polls.getTotalPages(), polls.isLast());
         }
 
-        // Map Polls to PollResponses containing vote counts and poll creator details
+
         List<Long> pollIds = polls.map(Poll::getId).getContent();
         Map<Long, Long> choiceVoteCountMap = getChoiceVoteCountMap(pollIds);
         Map<Long, Long> pollUserVoteMap = getPollUserVoteMap(currentUser, pollIds);
@@ -110,7 +108,7 @@ public class PollService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
-        // Retrieve all pollIds in which the given username has voted
+
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
         Page<Long> userVotedPollIds = voteRepository.findVotedPollIdsByUserId(user.getId(), pageable);
 
@@ -120,13 +118,13 @@ public class PollService {
                     userVotedPollIds.getTotalPages(), userVotedPollIds.isLast());
         }
 
-        // Retrieve all poll details from the voted pollIds.
+
         List<Long> pollIds = userVotedPollIds.getContent();
 
         Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
         List<Poll> polls = pollRepository.findByIdIn(pollIds, sort);
 
-        // Map Polls to PollResponses containing vote counts and poll creator details
+
         Map<Long, Long> choiceVoteCountMap = getChoiceVoteCountMap(pollIds);
         Map<Long, Long> pollUserVoteMap = getPollUserVoteMap(currentUser, pollIds);
         Map<Long, User> creatorMap = getPollCreatorMap(polls);
@@ -163,7 +161,7 @@ public class PollService {
         Poll poll = pollRepository.findById(pollId).orElseThrow(
                 () -> new ResourceNotFoundException("Poll", "id", pollId));
 
-        // Retrieve Vote Counts of every choice belonging to the current poll
+
         List<ChoiceVoteCount> votes = voteRepository.countByPollIdGroupByChoiceId(pollId);
 
         Map<Long, Long> choiceVotesMap = votes.stream()
@@ -173,7 +171,7 @@ public class PollService {
         User creator = userRepository.findById(poll.getCreatedBy())
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", poll.getCreatedBy()));
 
-        // Retrieve vote done by logged in user
+
         Vote userVote = null;
         if(currentUser != null) {
             userVote = voteRepository.findByUserIdAndPollId(currentUser.getId(), pollId);
@@ -210,15 +208,12 @@ public class PollService {
             throw new BadRequestException("Sorry! You have already cast your vote in this poll");
         }
 
-        //-- Vote Saved, Return the updated Poll Response now --
-
-        // Retrieve Vote Counts of every choice belonging to the current poll
         List<ChoiceVoteCount> votes = voteRepository.countByPollIdGroupByChoiceId(pollId);
 
         Map<Long, Long> choiceVotesMap = votes.stream()
                 .collect(Collectors.toMap(ChoiceVoteCount::getChoiceId, ChoiceVoteCount::getVoteCount));
 
-        // Retrieve poll creator details
+
         User creator = userRepository.findById(poll.getCreatedBy())
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", poll.getCreatedBy()));
 
@@ -237,7 +232,7 @@ public class PollService {
     }
 
     private Map<Long, Long> getChoiceVoteCountMap(List<Long> pollIds) {
-        // Retrieve Vote Counts of every Choice belonging to the given pollIds
+
         List<ChoiceVoteCount> votes = voteRepository.countByPollIdInGroupByChoiceId(pollIds);
 
         Map<Long, Long> choiceVotesMap = votes.stream()
@@ -247,7 +242,7 @@ public class PollService {
     }
 
     private Map<Long, Long> getPollUserVoteMap(UserPrincipal currentUser, List<Long> pollIds) {
-        // Retrieve Votes done by the logged in user to the given pollIds
+
         Map<Long, Long> pollUserVoteMap = null;
         if(currentUser != null) {
             List<Vote> userVotes = voteRepository.findByUserIdAndPollIdIn(currentUser.getId(), pollIds);
@@ -259,7 +254,7 @@ public class PollService {
     }
 
     Map<Long, User> getPollCreatorMap(List<Poll> polls) {
-        // Get Poll Creator details of the given list of polls
+
         List<Long> creatorIds = polls.stream()
                 .map(Poll::getCreatedBy)
                 .distinct()

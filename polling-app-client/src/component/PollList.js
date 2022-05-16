@@ -74,7 +74,6 @@ class PollList extends Component {
 
     componentDidUpdate(nextProps) {
         if(this.props.isAuthenticated !== nextProps.isAuthenticated) {
-            // Reset State
             this.setState({
                 polls: [],
                 page: 0,

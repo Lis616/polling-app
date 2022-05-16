@@ -4,7 +4,8 @@ import React, { Component } from 'react';
 import './UserList.css';
 //import NotFound from "../common/NotFound";
 //import ServerError from "../common/ServerError";
-
+import { Table } from 'antd';
+const { Column } = Table;
 
 
 class UserList extends Component{
@@ -46,13 +47,20 @@ class UserList extends Component{
             return <div> Loading... </div>;
         } else {
             return (
-                <ul>
-                    {items.map(item => (
-                     <li key={item.id}>
-                         <div className="full-name">{item.name} @{item.username}</div>
-                     </li>
-                 ))}
-             </ul>
+
+                <Table dataSource={items}>
+                        <Column title="Name" dataIndex="name" key="name" />
+                        <Column title="Username" dataIndex="username" key="username"  />
+                        <Column title="Email" dataIndex="email" key="email" />
+                </Table>
+
+                // <table>
+                //     {items.map(item => (
+                //         <tr key={item.id}>
+                //          <div className="full-name">{item.name} @{item.username}</div>
+                //         </tr>
+                //  ))}
+                // </table>
          )
      }
 

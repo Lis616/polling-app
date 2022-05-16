@@ -100,7 +100,7 @@ class App extends Component {
                     <div className="container">
                         <Switch>
                             <Route exact path="/"
-                                   render={(props) => <PollList isAuthenticated={this.state.isAuthenticated}
+                                   render={(props) => <PollList  isAuthenticated={this.state.isAuthenticated}
                                                                 currentUser={this.state.currentUser} handleLogout={this.handleLogout} {...props} />}>
                             </Route>
                             <Route path="/login"
