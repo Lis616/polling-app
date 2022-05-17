@@ -27,6 +27,9 @@ class Signup extends Component {
             },
             password: {
                 value: ''
+            },
+            confirmPassword: {
+                value: ''
             }
         }
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -56,7 +59,9 @@ class Signup extends Component {
             name: this.state.name.value,
             email: this.state.email.value,
             username: this.state.username.value,
-            password: this.state.password.value
+            password: this.state.password.value,
+            confirmPassword: this.state.confirmPassword.value
+
         };
         signup(signupRequest)
             .then(response => {
@@ -77,7 +82,8 @@ class Signup extends Component {
         return !(this.state.name.validateStatus === 'success' &&
             this.state.username.validateStatus === 'success' &&
             this.state.email.validateStatus === 'success' &&
-            this.state.password.validateStatus === 'success'
+            this.state.password.validateStatus === 'success' &&
+            this.state.confirmPassword.validateStatus === 'success'
         );
     }
 
@@ -140,6 +146,19 @@ class Signup extends Component {
                                 value={this.state.password.value}
                                 onChange={(event) => this.handleInputChange(event, this.validatePassword)} />
                         </FormItem>
+                        <FormItem
+                            label="Confirm password"
+                            validateStatus={this.state.confirmPassword.validateStatus}
+                            help={this.state.confirmPassword.errorMsg}>
+                            <Input
+                                size="large"
+                                name="confirmPassword"
+                                type="password"
+                                autoComplete="off"
+                                placeholder="A password between 6 to 20 characters"
+                                value={this.state.confirmPassword.value}
+                                onChange={(event) => this.handleInputChange(event, this.validateConfirmPassword)} />
+                        </FormItem>
                         <FormItem>
                             <Button type="primary"
                                     htmlType="submit"
@@ -154,7 +173,6 @@ class Signup extends Component {
         );
     }
 
-    // Validation Functions
 
     validateName = (name) => {
         if(name.length < NAME_MIN_LENGTH) {
@@ -349,6 +367,27 @@ class Signup extends Component {
             };
         }
     }
+
+    validateConfirmPassword = (confirmPassword) => {
+        if(confirmPassword.length < PASSWORD_MIN_LENGTH) {
+            return {
+                validateStatus: 'error',
+                errorMsg: `Password is too short (Minimum ${PASSWORD_MIN_LENGTH} characters needed.)`
+            }
+        } else if (confirmPassword.length > PASSWORD_MAX_LENGTH) {
+            return {
+                validationStatus: 'error',
+                errorMsg: `Password is too long (Maximum ${PASSWORD_MAX_LENGTH} characters allowed.)`
+            }
+        } else {
+            return {
+                validateStatus: 'success',
+                errorMsg: null,
+            };
+        }
+    }
+
+
 
 }
 

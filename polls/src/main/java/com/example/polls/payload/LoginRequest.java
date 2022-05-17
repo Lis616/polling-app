@@ -2,13 +2,14 @@ package com.example.polls.payload;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
+
+import javax.validation.constraints.NotEmpty;
 
 @Data
 public class LoginRequest {
-    @NotBlank
+    @NotEmpty(message = "Email or Username cannot be empty")
     private String usernameOrEmail;
 
-    @NotBlank
+    @NotEmpty(message = "Password cannot be empty")
     private String password;
 }

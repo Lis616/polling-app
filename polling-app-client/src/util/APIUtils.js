@@ -43,16 +43,6 @@ export function getAllUsers() {
 
 }
 
-// export const getUserList = () => {
-//     return (dispatch) => {
-//         axios.get("http://localhost:8080/api/users/all")
-//             .then((response) =>{
-//                 dispatch({type: 'GET_USER_LIST',payload: response.data})
-//             }).catch((error) => {
-//             dispatch({type: 'GET_USER_LIST',payload: {}})
-//         })
-//     }
-// };
 
 
 export function createPoll(pollData) {
