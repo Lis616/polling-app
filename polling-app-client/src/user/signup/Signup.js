@@ -177,17 +177,17 @@ class Signup extends Component {
     validateName = (name) => {
         if(name.length < NAME_MIN_LENGTH) {
             return {
-                validateStatus: 'error',
-                errorMsg: `Name is too short (Minimum ${NAME_MIN_LENGTH} characters needed.)`
+                validateStatus: 'Ошибка',
+                errorMsg: `Слишком короткое имя пользователя (Минимальное количество символов ${NAME_MIN_LENGTH})`
             }
         } else if (name.length > NAME_MAX_LENGTH) {
             return {
-                validationStatus: 'error',
-                errorMsg: `Name is too long (Maximum ${NAME_MAX_LENGTH} characters allowed.)`
+                validationStatus: 'Ошибка',
+                errorMsg: `Слишком длинное имя пользователя (Максимальное количество символов ${NAME_MAX_LENGTH}.)`
             }
         } else {
             return {
-                validateStatus: 'success',
+                validateStatus: 'успешно',
                 errorMsg: null,
             };
         }
@@ -196,23 +196,23 @@ class Signup extends Component {
     validateEmail = (email) => {
         if(!email) {
             return {
-                validateStatus: 'error',
-                errorMsg: 'Email may not be empty'
+                validateStatus: 'Ошибка',
+                errorMsg: 'Email не должен быть пустым'
             }
         }
 
         const EMAIL_REGEX = RegExp('[^@ ]+@[^@ ]+\\.[^@ ]+');
         if(!EMAIL_REGEX.test(email)) {
             return {
-                validateStatus: 'error',
-                errorMsg: 'Email not valid'
+                validateStatus: 'Ошибка',
+                errorMsg: 'Email недействителен '
             }
         }
 
         if(email.length > EMAIL_MAX_LENGTH) {
             return {
-                validateStatus: 'error',
-                errorMsg: `Email is too long (Maximum ${EMAIL_MAX_LENGTH} characters allowed)`
+                validateStatus: 'Ошибка',
+                errorMsg: `Email слишком длинный (Максимальное количество символов ${EMAIL_MAX_LENGTH})`
             }
         }
 
@@ -225,13 +225,13 @@ class Signup extends Component {
     validateUsername = (username) => {
         if(username.length < USERNAME_MIN_LENGTH) {
             return {
-                validateStatus: 'error',
-                errorMsg: `Username is too short (Minimum ${USERNAME_MIN_LENGTH} characters needed.)`
+                validateStatus: 'Ошибка',
+                errorMsg: `Никнейм слишком короткий (Минимальное количество символов ${USERNAME_MIN_LENGTH}.)`
             }
         } else if (username.length > USERNAME_MAX_LENGTH) {
             return {
-                validationStatus: 'error',
-                errorMsg: `Username is too long (Maximum ${USERNAME_MAX_LENGTH} characters allowed.)`
+                validationStatus: 'Ошибка',
+                errorMsg: `Никнейм слишком длинный (Максимальное количество символов ${USERNAME_MAX_LENGTH}.)`
             }
         } else {
             return {
@@ -242,11 +242,10 @@ class Signup extends Component {
     }
 
     validateUsernameAvailability() {
-        // First check for client side errors in username
         const usernameValue = this.state.username.value;
         const usernameValidation = this.validateUsername(usernameValue);
 
-        if(usernameValidation.validateStatus === 'error') {
+        if(usernameValidation.validateStatus === 'Ошибка') {
             this.setState({
                 username: {
                     value: usernameValue,
@@ -279,12 +278,11 @@ class Signup extends Component {
                         username: {
                             value: usernameValue,
                             validateStatus: 'error',
-                            errorMsg: 'This username is already taken'
+                            errorMsg: 'Этот никнейм уже существует'
                         }
                     });
                 }
             }).catch(error => {
-            // Marking validateStatus as success, Form will be recchecked at server
             this.setState({
                 username: {
                     value: usernameValue,
@@ -296,7 +294,6 @@ class Signup extends Component {
     }
 
     validateEmailAvailability() {
-        // First check for client side errors in email
         const emailValue = this.state.email.value;
         const emailValidation = this.validateEmail(emailValue);
 
@@ -332,13 +329,12 @@ class Signup extends Component {
                     this.setState({
                         email: {
                             value: emailValue,
-                            validateStatus: 'error',
-                            errorMsg: 'This Email is already registered'
+                            validateStatus: 'Ошибка',
+                            errorMsg: 'Этот Email уже существует'
                         }
                     });
                 }
             }).catch(error => {
-            // Marking validateStatus as success, Form will be recchecked at server
             this.setState({
                 email: {
                     value: emailValue,
@@ -352,17 +348,17 @@ class Signup extends Component {
     validatePassword = (password) => {
         if(password.length < PASSWORD_MIN_LENGTH) {
             return {
-                validateStatus: 'error',
-                errorMsg: `Password is too short (Minimum ${PASSWORD_MIN_LENGTH} characters needed.)`
+                validateStatus: 'Ошибка',
+                errorMsg: `Пароль слишком короткий (Минимальное количество символов ${PASSWORD_MIN_LENGTH}.)`
             }
         } else if (password.length > PASSWORD_MAX_LENGTH) {
             return {
-                validationStatus: 'error',
-                errorMsg: `Password is too long (Maximum ${PASSWORD_MAX_LENGTH} characters allowed.)`
+                validationStatus: 'Ошибка',
+                errorMsg: `Пароль слишком длинный (Максимальное количество символов ${PASSWORD_MAX_LENGTH}.)`
             }
         } else {
             return {
-                validateStatus: 'success',
+                validateStatus: 'Успешно',
                 errorMsg: null,
             };
         }
@@ -371,17 +367,17 @@ class Signup extends Component {
     validateConfirmPassword = (confirmPassword) => {
         if(confirmPassword.length < PASSWORD_MIN_LENGTH) {
             return {
-                validateStatus: 'error',
-                errorMsg: `Password is too short (Minimum ${PASSWORD_MIN_LENGTH} characters needed.)`
+                validateStatus: 'Ошибка',
+                errorMsg: `Пароль слишком короткий (Минимальное количество символов ${PASSWORD_MIN_LENGTH}.)`
             }
         } else if (confirmPassword.length > PASSWORD_MAX_LENGTH) {
             return {
-                validationStatus: 'error',
-                errorMsg: `Password is too long (Maximum ${PASSWORD_MAX_LENGTH} characters allowed.)`
+                validationStatus: 'Ошибка',
+                errorMsg: `Пароль слишком длинный (Максимальное количество символов ${PASSWORD_MAX_LENGTH}.)`
             }
         } else {
             return {
-                validateStatus: 'success',
+                validateStatus: 'Успешно',
                 errorMsg: null,
             };
         }
