@@ -48,10 +48,10 @@ class AppHeader extends Component {
         } else {
             menuItems = [
                 <Menu.Item key="/login">
-                    <Link to="/login">Login</Link>
+                    <Link to="/login">Вход</Link>
                 </Menu.Item>,
                 <Menu.Item key="/signup">
-                    <Link to="/signup">Signup</Link>
+                    <Link to="/signup">Регистрация</Link>
                 </Menu.Item>
             ];
         }
@@ -60,7 +60,7 @@ class AppHeader extends Component {
             <Header className="app-header">
                 <div className="container">
                     <div className="app-title" >
-                        <Link to="/">Polling App</Link>
+                        <Link to="/">Опросы</Link>
                     </div>
                     <Menu
                         className="app-menu"
@@ -88,10 +88,10 @@ function ProfileDropdownMenu(props) {
             </Menu.Item>
             <Menu.Divider />
             <Menu.Item key="profile" className="dropdown-item">
-                <Link to={`/users/${props.currentUser.username}`}>Profile</Link>
+                <Link to={`/users/${props.currentUser.username}`}>Профиль</Link>
             </Menu.Item>
             <Menu.Item key="logout" className="dropdown-item">
-                Logout
+                Выход
             </Menu.Item>
         </Menu>
     );

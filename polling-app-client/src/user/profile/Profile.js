@@ -90,7 +90,7 @@ class Profile extends Component {
                                     <div className="full-name">{this.state.user.name}</div>
                                     <div className="username">@{this.state.user.username}</div>
                                     <div className="user-joined">
-                                        Joined {formatDate(this.state.user.joinedAt)}
+                                        Зарегистрирован {formatDate(this.state.user.joinedAt)}
                                     </div>
                                 </div>
                             </div>
@@ -100,10 +100,10 @@ class Profile extends Component {
                                       tabBarStyle={tabBarStyle}
                                       size="large"
                                       className="profile-tabs">
-                                    <TabPane tab={`${this.state.user.pollCount} Polls`} key="1">
+                                    <TabPane tab={`${this.state.user.pollCount} Опросы`} key="1">
                                         <PollList username={this.props.match.params.username} type="USER_CREATED_POLLS" />
                                     </TabPane>
-                                    <TabPane tab={`${this.state.user.voteCount} Votes`}  key="2">
+                                    <TabPane tab={`${this.state.user.voteCount} Проголосовал`}  key="2">
                                         <PollList username={this.props.match.params.username} type="USER_VOTED_POLLS" />
                                     </TabPane>
                                 </Tabs>

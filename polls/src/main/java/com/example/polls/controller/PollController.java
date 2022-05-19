@@ -25,19 +25,28 @@ import java.net.URI;
 @RequestMapping("/api/polls")
 public class PollController {
 
-    @Autowired
+    //private static final Logger logger = LoggerFactory.getLogger(PollController.class);
+
+
     private PollRepository pollRepository;
 
-    @Autowired
+
     private VoteRepository voteRepository;
 
-    @Autowired
+
     private UserRepository userRepository;
 
-    @Autowired
+
     private PollService pollService;
 
-    private static final Logger logger = LoggerFactory.getLogger(PollController.class);
+
+    @Autowired
+    public PollController(PollRepository pollRepository, VoteRepository voteRepository, UserRepository userRepository, PollService pollService) {
+        this.pollRepository = pollRepository;
+        this.voteRepository = voteRepository;
+        this.userRepository = userRepository;
+        this.pollService = pollService;
+    }
 
     @GetMapping
     public PagedResponse<PollResponse> getPolls(@CurrentUser UserPrincipal currentUser,

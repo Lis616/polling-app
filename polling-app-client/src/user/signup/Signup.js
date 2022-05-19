@@ -90,22 +90,22 @@ class Signup extends Component {
     render() {
         return (
             <div className="signup-container">
-                <h1 className="page-title">Sign Up</h1>
+                <h1 className="page-title">Регистрация</h1>
                 <div className="signup-content">
                     <Form onSubmit={this.handleSubmit} className="signup-form">
                         <FormItem
-                            label="Full Name"
+                            label="Имя"
                             validateStatus={this.state.name.validateStatus}
                             help={this.state.name.errorMsg}>
                             <Input
                                 size="large"
                                 name="name"
                                 autoComplete="off"
-                                placeholder="Your full name"
+                                placeholder="Ваше полное имя"
                                 value={this.state.name.value}
                                 onChange={(event) => this.handleInputChange(event, this.validateName)} />
                         </FormItem>
-                        <FormItem label="Username"
+                        <FormItem label="Никнейм"
                                   hasFeedback
                                   validateStatus={this.state.username.validateStatus}
                                   help={this.state.username.errorMsg}>
@@ -113,7 +113,7 @@ class Signup extends Component {
                                 size="large"
                                 name="username"
                                 autoComplete="off"
-                                placeholder="A unique username"
+                                placeholder="Уникальное имя пользователя"
                                 value={this.state.username.value}
                                 onBlur={this.validateUsernameAvailability}
                                 onChange={(event) => this.handleInputChange(event, this.validateUsername)} />
@@ -128,13 +128,13 @@ class Signup extends Component {
                                 name="email"
                                 type="email"
                                 autoComplete="off"
-                                placeholder="Your email"
+                                placeholder="Ваш email"
                                 value={this.state.email.value}
                                 onBlur={this.validateEmailAvailability}
                                 onChange={(event) => this.handleInputChange(event, this.validateEmail)} />
                         </FormItem>
                         <FormItem
-                            label="Password"
+                            label="Пароль"
                             validateStatus={this.state.password.validateStatus}
                             help={this.state.password.errorMsg}>
                             <Input
@@ -142,12 +142,12 @@ class Signup extends Component {
                                 name="password"
                                 type="password"
                                 autoComplete="off"
-                                placeholder="A password between 6 to 20 characters"
+                                placeholder="Пароль должен содержать от 6 до 20 символов"
                                 value={this.state.password.value}
                                 onChange={(event) => this.handleInputChange(event, this.validatePassword)} />
                         </FormItem>
                         <FormItem
-                            label="Confirm password"
+                            label="Подтвердите пароль"
                             validateStatus={this.state.confirmPassword.validateStatus}
                             help={this.state.confirmPassword.errorMsg}>
                             <Input
@@ -155,7 +155,7 @@ class Signup extends Component {
                                 name="confirmPassword"
                                 type="password"
                                 autoComplete="off"
-                                placeholder="A password between 6 to 20 characters"
+                                placeholder="Пароль должен содержать от 6 до 20 символов"
                                 value={this.state.confirmPassword.value}
                                 onChange={(event) => this.handleInputChange(event, this.validateConfirmPassword)} />
                         </FormItem>
@@ -164,8 +164,8 @@ class Signup extends Component {
                                     htmlType="submit"
                                     size="large"
                                     className="signup-form-button"
-                                    disabled={this.isFormInvalid()}>Sign up</Button>
-                            Already registed? <Link to="/login">Login now!</Link>
+                                    disabled={this.isFormInvalid()}>Зарегистрироваться</Button>
+                            Уже есть аккаунт? <Link to="/login">Войдите</Link>
                         </FormItem>
                     </Form>
                 </div>

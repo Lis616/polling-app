@@ -65,11 +65,11 @@ class NewPoll extends Component {
                 this.props.history.push("/");
             }).catch(error => {
             if(error.status === 401) {
-                this.props.handleLogout('/login', 'error', 'You have been logged out. Please login create poll.');
+                this.props.handleLogout('/login', 'ошибка', 'You have been logged out. Please login create poll.');
             } else {
                 notification.error({
-                    message: 'Polling App',
-                    description: error.message || 'Sorry! Something went wrong. Please try again!'
+                    message: 'Уведомление приложения',
+                    description: error.message || 'Что-то пошло не так'
                 });
             }
         });
@@ -78,17 +78,17 @@ class NewPoll extends Component {
     validateQuestion = (questionText) => {
         if(questionText.length === 0) {
             return {
-                validateStatus: 'error',
-                errorMsg: 'Please enter your question!'
+                validateStatus: 'Ошибка приложения',
+                errorMsg: 'Пожалуйста, введите вопрос'
             }
         } else if (questionText.length > POLL_QUESTION_MAX_LENGTH) {
             return {
-                validateStatus: 'error',
-                errorMsg: `Question is too long (Maximum ${POLL_QUESTION_MAX_LENGTH} characters allowed)`
+                validateStatus: 'Ошибка приложения',
+                errorMsg: `Вопрос слишком длинный (Максимально доступно ${POLL_QUESTION_MAX_LENGTH} количество символов)`
             }
         } else {
             return {
-                validateStatus: 'success',
+                validateStatus: 'Успешно',
                 errorMsg: null
             }
         }
@@ -107,17 +107,17 @@ class NewPoll extends Component {
     validateChoice = (choiceText) => {
         if(choiceText.length === 0) {
             return {
-                validateStatus: 'error',
-                errorMsg: 'Please enter a choice!'
+                validateStatus: 'Ошибка приложения',
+                errorMsg: 'Пожалуйста, введите поле ответа'
             }
         } else if (choiceText.length > POLL_CHOICE_MAX_LENGTH) {
             return {
-                validateStatus: 'error',
-                errorMsg: `Choice is too long (Maximum ${POLL_CHOICE_MAX_LENGTH} characters allowed)`
+                validateStatus: 'Ошибка приложения',
+                errorMsg: `Текст ответа слишком длинный (Максимально доступно ${POLL_CHOICE_MAX_LENGTH} символов)`
             }
         } else {
             return {
-                validateStatus: 'success',
+                validateStatus: 'Успешно',
                 errorMsg: null
             }
         }
@@ -153,13 +153,13 @@ class NewPoll extends Component {
     }
 
     isFormInvalid() {
-        if(this.state.question.validateStatus !== 'success') {
+        if(this.state.question.validateStatus !== 'Успешно') {
             return true;
         }
 
         for(let i = 0; i < this.state.choices.length; i++) {
             const choice = this.state.choices[i];
-            if(choice.validateStatus !== 'success') {
+            if(choice.validateStatus !== 'Успешно') {
                 return true;
             }
         }
@@ -173,13 +173,13 @@ class NewPoll extends Component {
 
         return (
             <div className="new-poll-container">
-                <h1 className="page-title">Create Poll</h1>
+                <h1 className="page-title">Создание опроса</h1>
                 <div className="new-poll-content">
                     <Form onSubmit={this.handleSubmit} className="create-poll-form">
                         <FormItem validateStatus={this.state.question.validateStatus}
                                   help={this.state.question.errorMsg} className="poll-form-row">
                             <TextArea
-                                placeholder="Enter your question"
+                                placeholder="Введите вопрос"
                                 style = {{ fontSize: '16px' }}
                                 autosize={{ minRows: 3, maxRows: 6 }}
                                 name = "question"
@@ -189,12 +189,12 @@ class NewPoll extends Component {
                         {choiceViews}
                         <FormItem className="poll-form-row">
                             <Button type="dashed" onClick={this.addChoice} disabled={this.state.choices.length === MAX_CHOICES}>
-                                <Icon type="plus" /> Add a choice
+                                <Icon type="plus" /> Добавить ответ
                             </Button>
                         </FormItem>
                         <FormItem className="poll-form-row">
                             <Col xs={24} sm={4}>
-                                Poll length:
+                                Время опроса:
                             </Col>
                             <Col xs={24} sm={20}>
                                 <span style = {{ marginRight: '18px' }}>
@@ -209,7 +209,7 @@ class NewPoll extends Component {
                                                 <Option key={i}>{i}</Option>
                                             )
                                         }
-                                    </Select> &nbsp;Days
+                                    </Select> &nbsp;Дней
                                 </span>
                                 <span>
                                     <Select
@@ -223,7 +223,7 @@ class NewPoll extends Component {
                                                 <Option key={i}>{i}</Option>
                                             )
                                         }
-                                    </Select> &nbsp;Hours
+                                    </Select> &nbsp;Часов
                                 </span>
                             </Col>
                         </FormItem>
@@ -232,7 +232,7 @@ class NewPoll extends Component {
                                     htmlType="submit"
                                     size="large"
                                     disabled={this.isFormInvalid()}
-                                    className="create-poll-form-button">Create Poll</Button>
+                                    className="create-poll-form-button">Создание опроса</Button>
                         </FormItem>
                     </Form>
                 </div>
@@ -246,7 +246,7 @@ function PollChoice(props) {
         <FormItem validateStatus={props.choice.validateStatus}
                   help={props.choice.errorMsg} className="poll-form-row">
             <Input
-                placeholder = {'Choice ' + (props.choiceNumber + 1)}
+                placeholder = {'Ответ ' + (props.choiceNumber + 1)}
                 size="large"
                 value={props.choice.text}
                 className={ props.choiceNumber > 1 ? "optional-choice": null}

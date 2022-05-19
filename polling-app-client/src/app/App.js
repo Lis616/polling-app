@@ -71,15 +71,15 @@ class App extends Component {
         this.props.history.push(redirectTo);
 
         notification[notificationType]({
-            message: 'Polling App',
+            message: 'Уведомление приложения',
             description: description,
         });
     }
 
     handleLogin() {
         notification.success({
-            message: 'Polling App',
-            description: "You're successfully logged in.",
+            message: 'Уведомление приложения',
+            description: "Вы успешно зашли.",
         });
         this.loadCurrentUser();
         this.props.history.push("/");

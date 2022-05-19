@@ -40,15 +40,15 @@ class Poll extends Component {
         let timeRemaining;
 
         if(days > 0) {
-            timeRemaining = days + " days left";
+            timeRemaining = "Осталось дней: " + days ;
         } else if (hours > 0) {
-            timeRemaining = hours + " hours left";
+            timeRemaining = "Осталось часов: " + hours;
         } else if (minutes > 0) {
-            timeRemaining = minutes + " minutes left";
+            timeRemaining = "Осталось минут: " + minutes;
         } else if(seconds > 0) {
-            timeRemaining = seconds + " seconds left";
+            timeRemaining =  "Осталось секунд: " + seconds;
         } else {
-            timeRemaining = "Polling is over;";
+            timeRemaining = "Опрос окончен;";
         }
 
         return timeRemaining;
@@ -108,9 +108,9 @@ class Poll extends Component {
                 <div className="poll-footer">
                     {
                         !(this.props.poll.selectedChoice || this.props.poll.expired) ?
-                            (<Button className="vote-button" disabled={!this.props.currentVote} onClick={this.props.handleVoteSubmit}>Vote</Button>) : null
+                            (<Button className="vote-button" disabled={!this.props.currentVote} onClick={this.props.handleVoteSubmit}>Проголосовать</Button>) : null
                     }
-                    <span className="total-votes">{this.props.poll.totalVotes} votes</span>
+                    <span className="total-votes">{this.props.poll.totalVotes} голосов</span>
                     <span className="separator">•</span>
                     <span className="time-left">
                         {

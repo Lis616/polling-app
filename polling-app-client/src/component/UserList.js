@@ -49,8 +49,8 @@ class UserList extends Component{
             return (
 
                 <Table dataSource={items}>
-                        <Column title="Name" dataIndex="name" key="name" />
-                        <Column title="Username" dataIndex="username" key="username"  />
+                        <Column title="Имя" dataIndex="name" key="name" />
+                        <Column title="Никнейм" dataIndex="username" key="username"  />
                         <Column title="Email" dataIndex="email" key="email" />
                 </Table>
 

@@ -1,7 +1,6 @@
 package com.example.polls.controller;
 
 import com.example.polls.exception.ResourceNotFoundException;
-import com.example.polls.model.Poll;
 import com.example.polls.model.User;
 import com.example.polls.payload.*;
 import com.example.polls.repository.PollRepository;
@@ -16,31 +15,35 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+
 
 @CrossOrigin
 @RestController
 @RequestMapping("/api")
 public class UserController {
 
-    @Autowired
+
+    //private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
     private UserRepository userRepository;
 
-    @Autowired
+
     private PollRepository pollRepository;
 
-    @Autowired
+
     private VoteRepository voteRepository;
 
-    @Autowired
+
     private PollService pollService;
 
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+    @Autowired
+    public UserController(UserRepository userRepository, PollRepository pollRepository, VoteRepository voteRepository, PollService pollService) {
+        this.userRepository = userRepository;
+        this.pollRepository = pollRepository;
+        this.voteRepository = voteRepository;
+        this.pollService = pollService;
+    }
 
     @GetMapping("/user/me")
     @PreAuthorize("hasRole('USER')")
@@ -55,9 +58,6 @@ public class UserController {
        List<User> userList = userRepository.findAll();
        return userList;
     }
-
-
-
 
 
     @GetMapping("/user/checkUsernameAvailability")
